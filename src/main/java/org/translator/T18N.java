@@ -25,7 +25,7 @@ public class T18N {
 	}
 
 	public static String findKey(String text, Locale locale) {
-		return findKey(null, text, locale);
+		return findKey((Package)null, text, locale);
 	}
 
 	public static String findKey(Package pack, String text) {
@@ -35,14 +35,30 @@ public class T18N {
 	public static String findKey(Package pack, String text, Locale locale) {
 		if (pack != null) {
 			ResourceBundle resourceBundle = T18N.resourceBundles.get(pack);
-			if (resourceBundle.containsKey(text)) {
-				return text;
-			} else if (resourceBundle.containsKey(text + "." + locale)) {
-				return text + "." + locale;
+			if(resourceBundle != null) {
+			    return findKey(resourceBundle, text, locale);
 			}
 		} else {
-
+		    for(ResourceBundle resourceBundle : T18N.resourceBundles.values()) {
+		        String key = findKey(resourceBundle, text, locale);
+		        if(key != null) {
+		            return key;
+		        }
+		    }
 		}
 		return null;
+	}
+
+	private static String findKey(ResourceBundle resourceBundle, String text, Locale locale) {
+        if (resourceBundle.containsKey(text)) {
+            return text;
+        } else if (resourceBundle.containsKey(text + "." + locale)) {
+            return text + "." + locale;
+        } else {
+            for(String key : resourceBundle.keySet()) {
+                String value = resourceBundle.getString(key);
+            }
+        }
+        return null;
 	}
 }
