@@ -1,6 +1,7 @@
 package org.translator;
 
-import static org.translator.T18N.findKey;
+import static org.junit.Assert.assertEquals;
+import static org.translator.T18N.L;
 
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
@@ -18,9 +19,7 @@ public class T18NTest {
 
 	@Test
 	public void localizeTest() {
-		System.out.println(findKey("Hello World!"));
-
-		// assertEquals("Hello World!", L("org.translator.1.en_US"));
+		assertEquals("Hello World!", L("org.translator.1.en_US"));
 		// assertEquals("org.translator.1.en_US", L("Hello World!", Locale.getDefault()));
 		// assertEquals("org.translator.1.sv_SE", L("Hello World!", new Locale("sv", "SE")));
 		//
