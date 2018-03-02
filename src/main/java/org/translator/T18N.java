@@ -32,8 +32,9 @@ public class T18N {
 		if (key != null) {
 			key = key.substring(0, key.lastIndexOf(".") + 1) + locale;
 			for (ResourceBundle resourceBundle : T18N.resourceBundles.values()) {
-				if (resourceBundle.getString(key) != null) {
+				try {
 					return resourceBundle.getString(key);
+				} catch (MissingResourceException e) {
 				}
 			}
 		}
