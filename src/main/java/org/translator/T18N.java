@@ -109,6 +109,39 @@ public class T18N {
 		return localize(view, text, locale, counts);
 	}
 
+	// -------------------
+	public static String L(String[] texts) {
+		return L(texts, Locale.getDefault());
+	}
+
+	/**
+	 * We expect the strings to have the format localeIso:text. Ex: "en_US:Hello World!"
+	 * 
+	 * @param texts Array of localeIso:text pairs
+	 * @param locale The locale we want to find a text for.
+	 * @return The text for the given locale or null if none was found.
+	 */
+	public static String L(String[] texts, Locale locale) {
+		for (String text : texts) {
+			if (text.startsWith(locale.toString())) {
+				return text.substring(6);
+			}
+		}
+		return null;
+	}
+
+	public static String L(String[] texts, int... counts) {
+		return L(texts, Locale.getDefault(), counts);
+	}
+
+	public static String L(String[] texts, Locale locale, int... counts) {
+		String text = L(texts, locale);
+		text = pluralize(text, counts);
+		return text;
+	}
+
+	// ----------------------------
+
 	private static String findKey(String text, Locale locale) {
 		return findKey((Package) null, text, locale);
 	}
